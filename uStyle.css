@@ -1,0 +1,12 @@
+﻿body
+{
+    display: block;
+    margin: 0px 0px 0px 0px;
+    padding: 10px 10px 10px 10px;
+}
+canvas {
+    border:1px solid blue;
+    width:400px;
+    height:400px;
+    padding:10px 10px 10px 10px;
+}

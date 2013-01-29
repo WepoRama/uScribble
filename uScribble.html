@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>uScribble</title>
+    <link rel="stylesheet" type="text/css" href="uStyle.css" />   
+</head>
+<body> 
+    <h1>uScribble</h1>
+    <script src="uScribbleScript.js"></script>
+    <canvas id="uCanvas"></canvas>
+    <form id="choises">
+       <p>
+           <label for="backgroundColor">Select background color:</label>
+            <select id="backgroundColor">
+                <option value="white" selected="selected">White</option>
+                <option value="black">Black</option>
+            </select>
+        </p>
+        <p>
+            <label for="shape">Circles, Squares or Rectangles</label>
+            <select id="shape">
+                <option value="none" selected="selected">None</option>
+                <option value="circles">Circles</option>
+                <option value="squares">Squares</option>
+                <option value="rectangle">Rectangles</option>
+            </select>
+        </p>
+        <p>
+            <label for="penColor">select color for pen:</label>
+            <select id="penColor">
+                <option value="black" selected="selected">Black</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+            </select>
+        </p>
+        <p>
+            <label for="tweets">Pick a tweet:</label>
+            <select id="tweets">
+            </select>
+        </p>
+        <p>
+            <input type="button" id="previewButton" value="Preview" />
+        </p>
+        <p>
+            Kannski eitthvað meira
+        </p>
+    </form>
+    <script src="https://twitter.com/statuses/user_timeline/wickedsmartly.json?callback=updateTweets"></script>
+</body>
+</html>
