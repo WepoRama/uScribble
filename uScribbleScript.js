@@ -1,4 +1,10 @@
-﻿window.onload = function () {
+﻿var canvas;
+var context;
+var lastX;
+var lastY;
+var penDown;
+
+window.onload = function () {
     var button = document.getElementById("previewButton");
     //button.onclick =
     initCanvas();
@@ -20,15 +26,41 @@ function fillBackgroundColor(canvas, context) {
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
 function initCanvas() {
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext("2d")
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d")
     fillBackgroundColor(canvas, context);
     var selectObj = document.getElementById("shape");
     var index = selectObj.selectedIndex;
     var shape = selectObj[index].value;
 
     $('#canvas').mousedown(function (e) {
-        pressed = true;
+        penDown = true;
+    });
+    $('#canvas').mouseup(function (e) {
+        penDown = false;
+    });
+    $('#canvas').mousemove(function (e) {
+        if (!penDown) {
+            return;
+        }
+        var mouseX = e.pageX - this.offsetLeft;
+        var mouseY = e.pageY - this.offsetTop;
+        penDown = true;
+
+        context.strokeStyle = "black";
+		context.lineJoin = "round";
+        context.lineWidth = 10;
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(lastX, lastY);
+        context.lineTo(mouseX, mouseY);
+        context.closePath();
+        lastX = mouseX;
+        lastY = mouseY;
+    });
+    $('#canvas').mouseleave(function (e) {
+        penDown = false;
     });
 }
 function degreesToRadians(degrees) {
