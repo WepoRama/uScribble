@@ -34,7 +34,15 @@ function initCanvas() {
     var shape = selectObj[index].value;
 
     $('#canvas').mousedown(function (e) {
+        var mouseX = e.pageX - this.offsetLeft;
+        var mouseY = e.pageY - this.offsetTop;
+        context.beginPath();
+        context.moveTo(mouseX, mouseY);
+        context.closePath();
         penDown = true;
+        lastX = mouseX;
+        lastY = mouseY;
+
     });
     $('#canvas').mouseup(function (e) {
         penDown = false;
@@ -49,7 +57,7 @@ function initCanvas() {
 
         context.strokeStyle = "black";
 		context.lineJoin = "round";
-        context.lineWidth = 10;
+        context.lineWidth = 3;
         context.stroke();
 
         context.beginPath();

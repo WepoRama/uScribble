@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿body
 {
     display: block;
@@ -11,3 +12,16 @@ canvas {
     padding:10px 10px 10px 10px;
 
 }
+=======
+﻿body
+{
+    display: block;
+    margin: 0px 0px 0px 0px;
+    padding: 10px 10px 10px 10px;
+}
+canvas {
+    border:1px solid blue;
+
+    padding:10px 10px 10px 10px;
+}
+>>>>>>> Free draw does stuff
