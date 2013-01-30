@@ -32,7 +32,7 @@ function fillBackgroundColor(canvas, context) {
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
 function previewHandler() {
-    var canvas = document.getElementById("uCanvas");
+    var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d")
     fillBackgroundColor(canvas, context);
     var selectObj = document.getElementById("shape");
