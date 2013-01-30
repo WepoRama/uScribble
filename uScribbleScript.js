@@ -1,20 +1,8 @@
 ﻿window.onload = function () {
     var button = document.getElementById("previewButton");
-    button.onclick = previewHandler;
+    //button.onclick =
+    initCanvas();
 };
-function previewHandler() {
-    var canvas = document.getElementById("uCanvas");
-    var context = canvas.getContext("2d");
-    var selectObj = document.getElementById("shape");
-    var index = selectObj.selectedIndex;
-    var shape = selectObj[index].value;
-
-    if (shape == "squares") {
-        for (var squares = 0; squares < 20; squares++) {
-            drawSquare(canvas, context);
-        }
-    }
-}
 
 
 function drawSquare(canvas, context) {
@@ -31,7 +19,7 @@ function fillBackgroundColor(canvas, context) {
     context.fillStyle = selectObj[index].value;
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
-function previewHandler() {
+function initCanvas() {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d")
     fillBackgroundColor(canvas, context);
@@ -39,15 +27,9 @@ function previewHandler() {
     var index = selectObj.selectedIndex;
     var shape = selectObj[index].value;
 
-    if (shape == "squares") {
-        for (var squares = 0; squares < 20; squares++) {
-            drawSquare(canvas, context);
-        }
-    } else if (shape == "circles") {
-        for (var circles = 0; circles < 20; circles++) {
-            drawCircle(canvas, context);
-        }
-    }
+    $('#canvas').mousedown(function (e) {
+        pressed = true;
+    });
 }
 function degreesToRadians(degrees) {
     return (degrees * Math.PI) / 180;
