@@ -6,6 +6,7 @@ var penDown;
 var startPoint;
 var topCanvas;
 var topContext;
+var shapeStack = {};
 
 window.onload = function () {
     var button = document.getElementById("previewButton");
@@ -21,23 +22,43 @@ function Point(x, y) {
 
 // JavaScript class imitation:
 var Shape = Base.extend({
-    constructor: function (point) {
+    constructor: function (point, end) {
         this.startPoint = point;
+        this.x = point.x;
+        this.y = point.y;
+        this.endPoint = end;
+        this.length = end.x - point.x;
+        this.height = end.y - point.y ;
     },
     Draw: function (context) {
     }
 });
 var Rectangle = Shape.extend({
-    constructor: function (start, end) {
-        this.base(start);
-        this.endPoint = end;
+    constructor: function (point, end) {
+        this.base(point, end);
     },
     Draw: function (context) {
-        context.strokeRect(this.startPoint.x, this.startPoint.y,
-            this.endPoint.x - this.startPoint.x, this.endPoint.y - this.startPoint.y);
+        context.strokeRect(this.startPoint.x, this.startPoint.y, this.length, this.height);
     }
 });
+function degreesToRadians(degrees) {
+    return (degrees * Math.PI) / 180;
+}
 
+//*
+var Circle = Shape.extend({
+    constructor: function (start, end) {
+        this.base(start, end);
+        this.radius = Math.sqrt(this.length * this.length + this.height * this.height);
+    },
+    Draw: function (context) {
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
+
+        context.stroke();
+    }
+});
+// */
 
 
 
@@ -88,7 +109,7 @@ var Rectangle = Shape.extend({
             var mouseY = e.pageY - this.offsetTop;
             var endPoint = new Point(mouseX, mouseY);
 
-            var box = new Rectangle(startPoint, endPoint);
+            var box = new Circle(startPoint, endPoint);
             box.Draw(context);
         });
         $('#canvasTop').mousemove(function (e) {
@@ -100,7 +121,7 @@ var Rectangle = Shape.extend({
             var mouseY = e.pageY - this.offsetTop;
             var endPoint = new Point(mouseX, mouseY);
 
-            var box = new Rectangle(startPoint, endPoint);
+            var box = new Circle(startPoint, endPoint);
             topContext.clearRect(0, 0, 600, 600);
             box.Draw(topContext);
 
@@ -126,9 +147,7 @@ var Rectangle = Shape.extend({
             penDown = false;
         });
     }
-    function degreesToRadians(degrees) {
-        return (degrees * Math.PI) / 180;
-    }
+/*
     function drawCircle(canvas, context) {
         var radius = Math.floor(Math.random() * 40);
         var x = Math.floor(Math.random() * canvas.width);
@@ -138,5 +157,5 @@ var Rectangle = Shape.extend({
         context.fillStyle = "lightblue";
         context.fill();
     }
-
+*/
 
