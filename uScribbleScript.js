@@ -64,7 +64,7 @@ function WhichShape(shape) {
     var selectObj = document.getElementById("shape");
     var index = selectObj.selectedIndex;
     var shape = selectObj[index].value;
-    if (shape == "squares") {
+    if (shape == "rectangle") {
         return function (start, stop) { return new Rectangle(start, stop); }
     }
     else {
