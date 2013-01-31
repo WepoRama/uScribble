@@ -13,20 +13,31 @@ window.onload = function () {
     initCanvas();
 };
 
+
 function Point(x, y) {
     this.x = (x !== undefined) ? x : 0;
     this.y = (y !== undefined) ? y : 0;
 }
-function Rectangle (p) {
-    this.startPoint = (p !== undefined) ? p : new Point(0,0);
-}
-Rectangle.prototype.SetEndPoint = function (p) {
-    this.endPoint = (p !== undefined) ? p : new Point(0, 0);
-}
-Rectangle.prototype.Draw = function (context) {
-    context.strokeRect(this.startPoint.x, this.startPoint.y,
-        this.endPoint.x - this.startPoint.x, this.endPoint.y - this.startPoint.y);
-}
+
+// JavaScript class imitation:
+var Shape = Base.extend({
+    constructor: function (point) {
+        this.startPoint = point;
+    },
+    Draw: function (context) {
+    }
+});
+var Rectangle = Shape.extend({
+    constructor: function (start, end) {
+        this.base(start);
+        this.endPoint = end;
+    },
+    Draw: function (context) {
+        context.strokeRect(this.startPoint.x, this.startPoint.y,
+            this.endPoint.x - this.startPoint.x, this.endPoint.y - this.startPoint.y);
+    }
+});
+
 
 
 
@@ -77,8 +88,7 @@ Rectangle.prototype.Draw = function (context) {
             var mouseY = e.pageY - this.offsetTop;
             var endPoint = new Point(mouseX, mouseY);
 
-            var box = new Rectangle(startPoint);
-            box.SetEndPoint(endPoint);
+            var box = new Rectangle(startPoint, endPoint);
             box.Draw(context);
         });
         $('#canvasTop').mousemove(function (e) {
@@ -90,8 +100,7 @@ Rectangle.prototype.Draw = function (context) {
             var mouseY = e.pageY - this.offsetTop;
             var endPoint = new Point(mouseX, mouseY);
 
-            var box = new Rectangle(startPoint);
-            box.SetEndPoint(endPoint);
+            var box = new Rectangle(startPoint, endPoint);
             topContext.clearRect(0, 0, 600, 600);
             box.Draw(topContext);
 
