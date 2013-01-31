@@ -58,6 +58,15 @@ var Circle = Shape.extend({
         context.stroke();
     }
 });
+var Line = Shape.extend({
+    Draw: function (context) {
+        context.beginPath();
+        context.moveTo(this.x, this.y);
+        context.lineTo(this.endPoint.x, this.endPoint.y);
+        context.stroke();
+    }
+});
+
 // */
 
 function WhichShape(shape) {
@@ -66,36 +75,23 @@ function WhichShape(shape) {
     var shape = selectObj[index].value;
     if (shape == "rectangle") {
         return function (start, stop) { return new Rectangle(start, stop); }
+    }  // todo: add more shapes, here and above
+    else if (shape == "line") {
+        return function (start, stop) { return new Line(start, stop); }
     }
     else {
         return function (start, stop) { return new Circle(start, stop); }
     }
 }
 
-
-
-    function drawSquare(canvas, context) {
-        var w = Math.floor(Math.random() * 40);
-        var x = Math.floor(Math.random() * canvas.width);
-        var y = Math.floor(Math.random() * canvas.height);
-        context.fillStyle = "lightblue";
-        context.fillRect(x, y, w, w);
-    }
-    function fillBackgroundColor(canvas, context) {
-        var selectObj = document.getElementById("backgroundColor");
-        var index = selectObj.selectedIndex;
-        var bgColor = selectObj.options[index].value;
-        context.fillStyle = selectObj[index].value;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-    }
     function initCanvas() {
         canvas = document.getElementById("canvas");
-        context = canvas.getContext("2d")
+        context = canvas.getContext("2d");
 
         topCanvas = document.getElementById("canvasTop");
-        topContext = topCanvas.getContext("2d")
+        topContext = topCanvas.getContext("2d");
 
-        fillBackgroundColor(canvas, context);
+        //fillBackgroundColor(canvas, context);
         var selectObj = document.getElementById("shape");
         var index = selectObj.selectedIndex;
         var shape = selectObj[index].value;
@@ -107,13 +103,6 @@ function WhichShape(shape) {
             startPoint = new Point(mouseX, mouseY);
             penDown = true;
             ChooseShape = WhichShape();
-      /*            context.beginPath();
-            context.moveTo(mouseX, mouseY);
-            context.closePath();
-            lastX = mouseX;
-            lastY = mouseY;
-            // */
-
         });
         $('#canvasTop').mouseup(function (e) {
             penDown = false;
