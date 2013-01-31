@@ -60,7 +60,17 @@ var Circle = Shape.extend({
 });
 // */
 
-
+function WhichShape(shape) {
+    var selectObj = document.getElementById("shape");
+    var index = selectObj.selectedIndex;
+    var shape = selectObj[index].value;
+    if (shape == "squares") {
+        return function (start, stop) { return new Rectangle(start, stop); }
+    }
+    else {
+        return function (start, stop) { return new Circle(start, stop); }
+    }
+}
 
 
 
@@ -90,12 +100,14 @@ var Circle = Shape.extend({
         var index = selectObj.selectedIndex;
         var shape = selectObj[index].value;
 
+        var ChooseShape;
         $('#canvasTop').mousedown(function (e) {
             var mouseX = e.pageX - this.offsetLeft;
             var mouseY = e.pageY - this.offsetTop;
             startPoint = new Point(mouseX, mouseY);
             penDown = true;
-/*            context.beginPath();
+            ChooseShape = WhichShape();
+      /*            context.beginPath();
             context.moveTo(mouseX, mouseY);
             context.closePath();
             lastX = mouseX;
@@ -109,7 +121,7 @@ var Circle = Shape.extend({
             var mouseY = e.pageY - this.offsetTop;
             var endPoint = new Point(mouseX, mouseY);
 
-            var box = new Circle(startPoint, endPoint);
+            var box = ChooseShape(startPoint, endPoint);
             box.Draw(context);
         });
         $('#canvasTop').mousemove(function (e) {
@@ -121,7 +133,7 @@ var Circle = Shape.extend({
             var mouseY = e.pageY - this.offsetTop;
             var endPoint = new Point(mouseX, mouseY);
 
-            var box = new Circle(startPoint, endPoint);
+            var box = ChooseShape(startPoint, endPoint);
             topContext.clearRect(0, 0, 600, 600);
             box.Draw(topContext);
 
