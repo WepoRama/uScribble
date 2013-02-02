@@ -6,14 +6,33 @@ var penDown;
 var startPoint;
 var topCanvas;
 var topContext;
-var shapeStack = {};
+var shapeStack = new Array();
+var undoStack = new Array();
 
 window.onload = function () {
-    var button = document.getElementById("previewButton");
-    //button.onclick =
+    var button = document.getElementById("undo");
+    button.onclick = undoAddShape;
+    button = document.getElementById("redo");
+    button.onclick = redoAddShape;
+
     initCanvas();
 };
 
+function undoAddShape() {
+    stackTransfer(shapeStack, undoStack);
+    Redraw(shapeStack, context);
+}
+function redoAddShape() {
+    stackTransfer(undoStack, shapeStack);
+    Redraw(shapeStack, context);
+}
+function stackTransfer(fromStack, toStack) {
+    if (fromStack.length == 0) {
+        return;
+    }
+    var shape = fromStack.pop();
+    toStack.push(shape);
+}
 
 function Point(x, y) {
     this.x = (x !== undefined) ? x : 0;
@@ -66,6 +85,21 @@ var Line = Shape.extend({
         context.stroke();
     }
 });
+var Pen = Shape.extend({
+    segment: new Array(),
+    constructor: function(start, end) {
+        this.base(start, end);
+        this.segment.push(new Line(start, end));
+    },
+    add: function (segment) {
+        this.segment.push(segment);
+    },
+    Draw: function (contex) {
+        for (var i = 0; i < this.segment.length ; i++) {
+            this.segment[i].Draw(contex);
+        }
+    }
+});
 
 // */
 
@@ -78,6 +112,22 @@ function WhichShape(shape) {
     }  // todo: add more shapes, here and above
     else if (shape == "line") {
         return function (start, stop) { return new Line(start, stop); }
+    }
+    else if (shape == "pen") {
+        return function (start, stop) {
+            var that = {};
+            that.stop = stop;
+            that.shape = new Pen(start, stop);
+            
+            var func = function (start, stop) {
+                that.shape.push(new Line(that.stop, stop));
+                that.stop = stop;
+            }
+            func.Draw = function (context) {
+                that.shape.Draw(context);
+            }
+            return func;
+        }
     }
     else {
         return function (start, stop) { return new Circle(start, stop); }
@@ -105,6 +155,7 @@ function WhichShape(shape) {
             ChooseShape = WhichShape();
         });
         $('#canvasTop').mouseup(function (e) {
+            topContext.clearRect(0, 0, 600, 600);
             penDown = false;
             var mouseX = e.pageX - this.offsetLeft;
             var mouseY = e.pageY - this.offsetTop;
@@ -112,6 +163,7 @@ function WhichShape(shape) {
 
             var box = ChooseShape(startPoint, endPoint);
             box.Draw(context);
+            shapeStack.push(box);
         });
         $('#canvasTop').mousemove(function (e) {
             if (!penDown) {
@@ -148,15 +200,10 @@ function WhichShape(shape) {
             penDown = false;
         });
     }
-/*
-    function drawCircle(canvas, context) {
-        var radius = Math.floor(Math.random() * 40);
-        var x = Math.floor(Math.random() * canvas.width);
-        var y = Math.floor(Math.random() * canvas.height);
-        context.beginPath();
-        context.arc(x, y, radius, 0, degreesToRadians(360), true);
-        context.fillStyle = "lightblue";
-        context.fill();
-    }
-*/
 
+    function Redraw(stack, context) {
+        context.clearRect(0, 0, 600, 600);
+        for (var i = 0; i < stack.length ; i++) {
+            stack[i].Draw(context);
+        }
+    }
