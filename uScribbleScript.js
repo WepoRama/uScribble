@@ -7,6 +7,18 @@ var startPoint;
 var topCanvas;
 var topContext;
 var shapeStack = new Array();
+shapeStack.findInPath = function (point, context) {
+    for (var i = stack.length; i> 0 ; i--) {
+        stack[i].Trace(context);
+        if (context.isPointInPath(point.x, point.y)) {
+            return i;
+        }
+    }
+    return -1;
+}
+shapeStack.hide = function (shape) { }
+    
+
 var undoStack = new Array();
 
 window.onload = function () {
@@ -49,15 +61,23 @@ var Shape = Base.extend({
         this.length = end.x - point.x;
         this.height = end.y - point.y ;
     },
+    Trace: function (context) {
+    },
     Draw: function (context) {
-    }
+        this.Trace(context);
+        context.stroke();
+    },
+    visible: true,
+    hide: function() { this.visible = false;},
+    show: function() { this.visible = true;}
 });
 var Rectangle = Shape.extend({
     constructor: function (point, end) {
         this.base(point, end);
     },
-    Draw: function (context) {
-        context.strokeRect(this.startPoint.x, this.startPoint.y, this.length, this.height);
+    Trace: function (context) {
+        context.beginPath();
+        context.rect(this.startPoint.x, this.startPoint.y, this.length, this.height);
     }
 });
 function degreesToRadians(degrees) {
@@ -70,19 +90,16 @@ var Circle = Shape.extend({
         this.base(start, end);
         this.radius = Math.sqrt(this.length * this.length + this.height * this.height);
     },
-    Draw: function (context) {
+    Trace: function (context) {
         context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
-
-        context.stroke();
     }
 });
 var Line = Shape.extend({
-    Draw: function (context) {
+    Trace: function (context) {
         context.beginPath();
         context.moveTo(this.x, this.y);
         context.lineTo(this.endPoint.x, this.endPoint.y);
-        context.stroke();
     }
 });
 var Pen = Shape.extend({
@@ -151,8 +168,13 @@ function WhichShape(shape) {
             var mouseX = e.pageX - this.offsetLeft;
             var mouseY = e.pageY - this.offsetTop;
             startPoint = new Point(mouseX, mouseY);
-            penDown = true;
-            ChooseShape = WhichShape();
+            //var whichShape = shapeStack.findInPath(startPoint, topContext)
+            //if (whichShape == -1) {
+                penDown = true;
+                ChooseShape = WhichShape();
+            /*} else {
+                shapeStack.hide(whichShape);
+            }// */
         });
         $('#canvasTop').mouseup(function (e) {
             topContext.clearRect(0, 0, 600, 600);
@@ -207,3 +229,13 @@ function WhichShape(shape) {
             stack[i].Draw(context);
         }
     }
+/*
+    function findInPath(point, stack, context) {
+        for (var i = stack.length; i> 0 ; i--) {
+            stack[i].Trace(context);
+            if (context.isPointInPath(point.x, point.y)) {
+                return i;
+            }
+        }
+        return -1;
+    }*/
