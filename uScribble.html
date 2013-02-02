@@ -7,7 +7,14 @@
     <link rel="stylesheet" type="text/css" href="uStyle.css" />   
 
     <script type="text/javascript" src="http://dean.edwards.name/base/Base.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script> -->
+
+	<script type="text/javascript" src="js/jquery.js" </script>
+	<script type="text/javascript" src="js/colorpicker.js"></script>
+    <script type="text/javascript" src="js/eye.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+   <!-- <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
+   -->
 </head>
 <body> 
     <h1>uScribble</h1>
@@ -25,7 +32,7 @@
         <p>
             <label for="shape">Circles, Squares or Rectangles</label>
             <select id="shape">
-                <option value="pen" >Pen</option>
+                <option value="pen" >pen</option>
                 <option value="circles" selected="selected">Circles</option>
                 <option value="line">line</option>
                 <option value="rectangle">Rectangles</option>
@@ -47,7 +54,10 @@
         <p>
             Kannski eitthvað meira
         </p>
+        <!--p id="colorSelector"> stuff
+                </p-->
+        <p id="colorpickerHolder"> stuff
+                </p>
     </form>
-    <script src="https://twitter.com/statuses/user_timeline/wickedsmartly.json?callback=updateTweets"></script>
 </body>
 </html>

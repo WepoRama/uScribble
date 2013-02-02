@@ -17,6 +17,13 @@ shapeStack.findInPath = function (point, context) {
     return -1;
 }
 shapeStack.hide = function (shape) { }
+shapeStack.show = function (shape) { }
+shapeStack.redraw = function (context) {
+    context.clearRect(0, 0, 600, 600);
+    for (var i = 0; i < this.length; i++) {
+        this [i].Draw(context);
+    }
+}
     
 
 var undoStack = new Array();
@@ -32,11 +39,11 @@ window.onload = function () {
 
 function undoAddShape() {
     stackTransfer(shapeStack, undoStack);
-    Redraw(shapeStack, context);
+    shapeStack.redraw(context);
 }
 function redoAddShape() {
     stackTransfer(undoStack, shapeStack);
-    Redraw(shapeStack, context);
+    shapeStack.redraw(context);
 }
 function stackTransfer(fromStack, toStack) {
     if (fromStack.length == 0) {
@@ -129,23 +136,24 @@ function WhichShape(shape) {
     }  // todo: add more shapes, here and above
     else if (shape == "line") {
         return function (start, stop) { return new Line(start, stop); }
-    }
+    } 
     else if (shape == "pen") {
-        return function (start, stop) {
-            var that = {};
-            that.stop = stop;
-            that.shape = new Pen(start, stop);
-            
-            var func = function (start, stop) {
-                that.shape.push(new Line(that.stop, stop));
-                that.stop = stop;
+        var start = null;
+        var shape = null; //new Pen();
+        var func = function (nextStart, nextStop) {
+            if (shape === null) {
+                shape = new Pen(nextStart, nextStop);
+                start = nextStop;
+            } else {
+                shape.add(new Line(start, nextStop));
+                start = nextStop;
             }
-            func.Draw = function (context) {
-                that.shape.Draw(context);
-            }
-            return func;
+            return shape;
+        };
+        //func.Draw = function (context) { that.shape.Draw(context); }
+        //func.Trace = function (context) { that.shape.Trace(context); }
+        return func;
         }
-    }
     else {
         return function (start, stop) { return new Circle(start, stop); }
     }
@@ -221,14 +229,27 @@ function WhichShape(shape) {
         $('#canvasTop').mouseleave(function (e) {
             penDown = false;
         });
+        /*
+        $('#colorSelector').ColorPicker({
+            color: '#0000ff',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#colorSelector div').css('backgroundColor', '#' + hex);
+            }
+        });
+        //$('#colorSelector').ColorPicker({ flat: true });
+        //$('#colorpickerHolder').ColorPicker({ flat: true });
+        // */
+
     }
 
-    function Redraw(stack, context) {
-        context.clearRect(0, 0, 600, 600);
-        for (var i = 0; i < stack.length ; i++) {
-            stack[i].Draw(context);
-        }
-    }
 /*
     function findInPath(point, stack, context) {
         for (var i = stack.length; i> 0 ; i--) {
