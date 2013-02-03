@@ -1,12 +1,13 @@
 
 ﻿body
 {
-	margin: 0px 0px 0px 0px;
+	margin: 15px 0px 0px 0px;
     padding: 5px 10px 5px 10px;
 
 }
 canvas 
 {
+	margin-top: 5px;
     border: 1px solid black;
     border-radius: 7px;
     box-shadow: 5px 5px 3px #888888;
@@ -44,6 +45,7 @@ h1
 	text-shadow: 3px 3px #111111;
 	width: 1200px;
 	margin-bottom: 1px;
+	margin-top: 3px;
 	border: 1px solid black;
     border-radius: 7px;
     box-shadow: 5px 5px 3px #888888;
