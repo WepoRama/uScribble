@@ -245,8 +245,9 @@ function WhichShape(shape) {
             }
         });
         //$('#colorSelector').ColorPicker({ flat: true });
-        //$('#colorpickerHolder').ColorPicker({ flat: true });
+        
         // */
+        $('#colorpickerHolder').ColorPicker({ flat: true });
 
     }
 
