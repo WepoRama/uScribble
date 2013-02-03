@@ -1,11 +1,30 @@
 
 ﻿body
 {
-    margin: 0px 0px 0px 0px;
-    padding: 10px 10px 10px 10px;
+	margin: 0px 0px 0px 0px;
+    padding: 5px 10px 5px 10px;
+
 }
-canvas {
-    border:1px solid black;
+canvas 
+{
+    border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 5px 5px 3px #888888;
+    -moz-border-radius: 7px; /* Old firefox */
+}
+h1
+{
+	color: #ffffff;
+	background-image: url('backgr.jpg');
+	font-size: 50px;
+	padding-left: 5px;
+	text-shadow: 3px 3px #333333;
+	width: 1200px;
+	margin-bottom: 1px;
+	border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 5px 5px 3px #888888;
+    -moz-border-radius: 7px; /* Old firefox */
 }
 #canvasTop
 {
@@ -15,6 +34,24 @@ canvas {
 #canvas
 {
     position: absolute;
-    border: 1px solid black;
 }
-
+#choises
+{
+	color: #ffffff;
+	background-image: url('backgr.jpg');
+	font-size: 22px;
+	padding-left: 5px;
+	text-shadow: 3px 3px #111111;
+	width: 1200px;
+	margin-bottom: 1px;
+	border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 5px 5px 3px #888888;
+    -moz-border-radius: 7px; /* Old firefox */
+}
+#penColor, #shape, #displayText
+{
+	border: 1px solid black;
+	border-radius: 3px;
+	box-shadow: 3px 3px 2px #888888;
+}

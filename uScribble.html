@@ -25,6 +25,14 @@
     <canvas id="canvasTop" width="1200" height="600">No Canvas; sucks to be you!</canvas>
     <form id="choises">
         <p>
+            <label for="penColor">Select color:</label>
+            <select id="penColor">
+                <option value="black" selected="selected">Black</option>
+                <option value="blue">Blue</option>
+                <option value="#ff0000">Red</option>
+                <option value="green">Green</option>
+            </select>
+
             <label for="shape">Choose tool: </label>
             <select id="shape">
                 <option value="pen" >Penis</option>
@@ -34,13 +42,6 @@
                 <option value="text">Text</option>
             </select>
 
-            <label for="penColor">Select color:</label>
-            <select id="penColor">
-                <option value="black" selected="selected">Black</option>
-                <option value="blue">Blue</option>
-                <option value="#ff0000">Red</option>
-                <option value="green">Green</option>
-            </select>
             <label for="displayText">Text field for text tool:</label>
             <input type="text" id="displayText" value="Hello world"/>
         </p>
