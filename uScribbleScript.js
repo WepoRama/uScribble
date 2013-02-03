@@ -125,7 +125,21 @@ var Pen = Shape.extend({
         }
     }
 });
-
+var Text = Shape.extend({
+    size: null,
+    text: null,
+    Draw: function (context) {
+        if (this.size === null) {
+            this.size = 12;
+        }
+        if (this.text === null) {
+            this.text = "Hello World!";
+        }
+        var font = this.size + "px Arial";
+        context.font = font;
+        context.fillText(this.text, this.x, this.y);
+    }
+});
 // */
 
 function WhichShape(shape) {
@@ -152,6 +166,9 @@ function WhichShape(shape) {
             return shape;
         };
         return func;
+    }
+    else if (shape == "text") {
+        return function (start, stop) { return new Text(start, stop); }
     }
     else {
         return function (start, stop) { return new Circle(start, stop); }
