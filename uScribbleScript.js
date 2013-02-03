@@ -1,4 +1,10 @@
-﻿var canvas;
+﻿/*
+    <!-- WEPO 2013. Verkefni 1 -->
+    <!-- höf: Carsten Petersen, Elín Gylfadóttir og Sigrún Inga Kristinsdóttir -->
+    <!-- uScribble whiteboard 03.02.2012-->
+*/
+
+var canvas;
 var context;
 var lastX;
 var lastY;
