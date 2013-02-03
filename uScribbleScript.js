@@ -110,17 +110,18 @@ var Line = Shape.extend({
     }
 });
 var Pen = Shape.extend({
-    segment: new Array(),
+    myLine: null, 
     constructor: function(start, end) {
         this.base(start, end);
-        this.segment.push(new Line(start, end));
+        this.myLine = new Array();
+        this.myLine.push(new Line(start, end));
     },
     add: function (segment) {
-        this.segment.push(segment);
+        this.myLine.push(segment);
     },
     Draw: function (contex) {
-        for (var i = 0; i < this.segment.length ; i++) {
-            this.segment[i].Draw(contex);
+        for (var i = 0; i < this.myLine.length ; i++) {
+            this.myLine[i].Draw(contex);
         }
     }
 });
@@ -139,8 +140,8 @@ function WhichShape(shape) {
     } 
     else if (shape == "pen") {
         var start = null;
-        var shape = null; //new Pen();
-        var func = function (nextStart, nextStop) {
+        var shape = null;
+        var func = func = function (nextStart, nextStop) {
             if (shape === null) {
                 shape = new Pen(nextStart, nextStop);
                 start = nextStop;
@@ -150,10 +151,8 @@ function WhichShape(shape) {
             }
             return shape;
         };
-        //func.Draw = function (context) { that.shape.Draw(context); }
-        //func.Trace = function (context) { that.shape.Trace(context); }
         return func;
-        }
+    }
     else {
         return function (start, stop) { return new Circle(start, stop); }
     }
@@ -194,6 +193,7 @@ function WhichShape(shape) {
             var box = ChooseShape(startPoint, endPoint);
             box.Draw(context);
             shapeStack.push(box);
+            box = null;
         });
         $('#canvasTop').mousemove(function (e) {
             if (!penDown) {
