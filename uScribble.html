@@ -21,11 +21,11 @@
 <body> 
     <h1>uScribble</h1>
     <script src="uScribbleScript.js"></script>
-    <canvas id="canvas" width="600" height="600">No Canvas; sucks to be you!</canvas>
-    <canvas id="canvasTop" width="600" height="600">No Canvas; sucks to be you!</canvas>
+    <canvas id="canvas" width="1200" height="600">No Canvas; sucks to be you!</canvas>
+    <canvas id="canvasTop" width="1200" height="600">No Canvas; sucks to be you!</canvas>
     <form id="choises">
         <p>
-            <label for="shape">Circles, Squares or Rectangles</label>
+            <label for="shape">Choose tool: </label>
             <select id="shape">
                 <option value="pen" >Penis</option>
                 <option value="circles" selected="selected">Circles</option>
@@ -33,23 +33,22 @@
                 <option value="rectangle">Rectangles</option>
                 <option value="text">Text</option>
             </select>
-        </p>
-        <p>
-            <label for="penColor">select color for pen:</label>
+
+            <label for="penColor">Select color:</label>
             <select id="penColor">
                 <option value="black" selected="selected">Black</option>
                 <option value="blue">Blue</option>
                 <option value="#ff0000">Red</option>
                 <option value="green">Green</option>
             </select>
+            <label for="displayText">Text field for text tool:</label>
+            <input type="text" id="displayText" value="Hello world"/>
         </p>
         <p>
             <input type="button" id="undo" value="Undo" />
             <input type="button" id="redo" value="Redo" />
         </p>
-        <p>
-            <input type="text" id="displayText" value="Hello world" />
-        </p>
+        
         <!-- '#colorpickerField1, #colorpickerField2, #colorpickerField3' -->
     </form>
 </body>

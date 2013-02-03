@@ -19,7 +19,7 @@ shapeStack.findInPath = function (point, context) {
 shapeStack.hide = function (shape) { }
 shapeStack.show = function (shape) { }
 shapeStack.redraw = function (context) {
-    context.clearRect(0, 0, 600, 600);
+    context.clearRect(0, 0, 1200, 600);
     for (var i = 0; i < this.length; i++) {
         this [i].Draw(context);
     }
@@ -213,7 +213,7 @@ function WhichShape(shape) {
             }// */
         });
         $('#canvasTop').mouseup(function (e) {
-            topContext.clearRect(0, 0, 600, 600);
+            topContext.clearRect(0, 0, 1200, 600);
             penDown = false;
             var mouseX = e.pageX - this.offsetLeft;
             var mouseY = e.pageY - this.offsetTop;
@@ -234,7 +234,7 @@ function WhichShape(shape) {
             var endPoint = new Point(mouseX, mouseY);
 
             var box = ChooseShape(startPoint, endPoint);
-            topContext.clearRect(0, 0, 600, 600);
+            topContext.clearRect(0, 0, 1200, 600);
             box.Draw(topContext);
 
             /*
