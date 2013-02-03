@@ -66,20 +66,22 @@ var Shape = Base.extend({
         this.y = point.y;
         this.endPoint = end;
         this.length = end.x - point.x;
-        this.height = end.y - point.y ;
+        this.height = end.y - point.y;
+        this.color = this.findColor();
     },
     Trace: function (context) {
     },
     Draw: function (context) {
-        context.strokeStyle = this.color();
-        context.fillStyle = this.color();
+        context.strokeStyle = this.color;
+        context.fillStyle = this.color;
         this.Trace(context);
         context.stroke();
     },
+    color: "black",
     visible: true,
     hide: function() { this.visible = false;},
     show: function () { this.visible = true; },
-    color: function () {
+    findColor: function () {
         var selectObj = document.getElementById("penColor");
         var index = selectObj.selectedIndex;
         return selectObj[index].value;
@@ -136,7 +138,7 @@ var Text = Shape.extend({
     size: null,
     text: null,
     Draw: function (context) {
-        context.fillStyle = this.color();
+        context.fillStyle = this.color;
         if (this.size === null) {
             this.size = 12;
         }
@@ -274,7 +276,7 @@ function WhichShape(shape) {
         //$('#colorSelector').ColorPicker({ flat: true });
         
         // */
-        $('#colorpickerHolder').ColorPicker({ flat: true });
+        //$('#colorpickerHolder').ColorPicker({ flat: true });
 
 
     }
