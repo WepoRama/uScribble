@@ -133,7 +133,7 @@ var Text = Shape.extend({
             this.size = 12;
         }
         if (this.text === null) {
-            this.text = "Hello World!";
+            this.text = "Type your text here";
         }
         var font = this.size + "px Arial";
         context.font = font;
@@ -168,7 +168,9 @@ function WhichShape(shape) {
         return func;
     }
     else if (shape == "text") {
-        return function (start, stop) { return new Text(start, stop); }
+        var textObj = document.getElementById("displayText");
+        var text = textObj.value;
+        return function (start, stop) { var o = new Text(start, stop); o.text = text; return o;}
     }
     else {
         return function (start, stop) { return new Circle(start, stop); }
