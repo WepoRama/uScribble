@@ -71,12 +71,19 @@ var Shape = Base.extend({
     Trace: function (context) {
     },
     Draw: function (context) {
+        context.strokeStyle = this.color();
+        context.fillStyle = this.color();
         this.Trace(context);
         context.stroke();
     },
     visible: true,
     hide: function() { this.visible = false;},
-    show: function() { this.visible = true;}
+    show: function () { this.visible = true; },
+    color: function () {
+        var selectObj = document.getElementById("penColor");
+        var index = selectObj.selectedIndex;
+        return selectObj[index].value;
+    }
 });
 var Rectangle = Shape.extend({
     constructor: function (point, end) {
@@ -129,6 +136,7 @@ var Text = Shape.extend({
     size: null,
     text: null,
     Draw: function (context) {
+        context.fillStyle = this.color();
         if (this.size === null) {
             this.size = 12;
         }
@@ -267,6 +275,7 @@ function WhichShape(shape) {
         
         // */
         $('#colorpickerHolder').ColorPicker({ flat: true });
+
 
     }
 
